@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip Card Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #181212;
+            margin: 0;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 800px;
+        }
+        .card {
+            width: 150px;
+            height: 200px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-front {
+            background-color: #34db63;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .card-back {
+            background-color: #cc682e;
+            color: white;
+            transform: rotateY(180deg);
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="cardContainer"></div>
+
+    <script>
+        const cardContainer = document.getElementById('cardContainer');
+        const cardContents = [
+           "12","11","10","9",
+           "8","7","6","5",
+           "4","3","2","1",
+        ];
+
+        cardContents.forEach((content, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">${index + 1}</div>
+                    <div class="card-back">
+                        <h3>${content}</h3>
+                      
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+            });
+            cardContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>
